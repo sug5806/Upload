@@ -2,19 +2,21 @@
 # read, delegate, make_sum
 
 def read_data(filename):
+    print("read_data start")
+    r = delegate()
     f = open(filename, 'rt')
-    line = f.readlines()
-    return line
+    while True: 
+        line = f.readline()
+        yield from delegate(line)  
+    return "end" 
+
+def delegate(data):
+    print("delegate start")
+    sum_data = make_sum(data)
+    ret = yield from sum_data # list
+     
+    return ret
     
-
-def delegate(filename):
-    func_data = read_data(filename)
-    make_sum(data) = yield from func_data # list
-
-    print("sending data")
-    
-
-
 
 def make_sum(data):
     sum = 0
@@ -23,7 +25,12 @@ def make_sum(data):
         sum += i 
     
 if __name__ == "__main__":
-    li = ["data1.txt","data2.txt","data3.txt"]
-    for filename in range(len(li)):
-        g = delegate(filename)
-
+    g = delegate("data1.txt")
+    next(g)
+    next(g)
+    next(g)
+    next(g)
+    next(g)
+    next(g)   
+    next(g) 
+    next(g) 
