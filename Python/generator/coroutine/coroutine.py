@@ -1,22 +1,24 @@
 def read_data(filename):
-    f=open(filename,'rt')
-    line=f.readline()
+    f = open(filename,'rt')
+    line = f.readline()
     while line != '':
-        #print(f'read_data : {line}')
+        print(f'read_data : {line}')
         yield int(line)        
-        line=f.readline()
+        line = f.readline()
         
 def delegate(*filelist):
-    for i in range(len(filelist)):
-        g = read_data(filelist[i])
-        #print(f'delegate : {i}')
-        ret = yield from g        
+    for i in filelist:
+        g = read_data(i)
+        print(f'delegate : {i}')
+        ret = yield from g   
+        print("sending...")
     
 def make_sum(gen):
     result = 0 
     try :
         while True:
-            result +=next(gen)
+            result += next(gen)
+        print(result)    
     except StopIteration as e:
         print(result)
         
